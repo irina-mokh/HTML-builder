@@ -11,7 +11,6 @@ function bundleCss(){
     if (err) {console.error(err)}
     files.forEach(file=>{
       let extension = path.extname(file.name).toString().slice(1);
-      let content = '';
       fs.readFile(path.join(__dirname, './styles', file.name),'utf-8', (err, data)=>{
         if (err) {console.error(err)};
         let content = data;

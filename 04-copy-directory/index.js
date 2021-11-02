@@ -20,7 +20,6 @@ fs.readdir(path.join(__dirname, './files-copy'), {withFileTypes: true}, (err, fi
 });
 
 function copyDir() {
-  console.log('copyDir run');
   fs.readdir(path.join(__dirname, './files'), {withFileTypes: true}, (err, files)=>{
     if (err) {console.error(err)}
     files.forEach(file=>{
