@@ -1,12 +1,20 @@
 const fs = require('fs');
 const path = require('path');
-const { stdout } = process;
-fs.unlink(path.join(__dirname, './project-dist/bundle.css'), err=>{
-  if (err) {console.error(err)}
+const bundle = path.join(__dirname, './project-dist/bundle.css');
+
+fs.access( bundle, err=>{
+  if (err) {
+
+  } else {
+    fs.unlink(bundle, err=>{
+      if (err) {console.error(err)}
+    })
+  }
   bundleCss();
 })
 
 function bundleCss(){
+  const output = fs.createWriteStream(bundle,'utf-8');
   fs.readdir(path.join(__dirname, './styles'), {withFileTypes: true}, (err, files)=>{
     if (err) {console.error(err)}
     files.forEach(file=>{
@@ -15,15 +23,11 @@ function bundleCss(){
         if (err) {console.error(err)};
         let content = data;
         if (file.isFile() && extension === 'css') {
-          fs.appendFile(path.join(__dirname, './project-dist/bundle.css'),`\n${content}`, (err)=>{
+          fs.appendFile(bundle,`\n${content}`, (err)=>{
             if (err) {console.error(err)}
-          });
+          })
         }
       });
     })
   });
 }
-
-
-
-
